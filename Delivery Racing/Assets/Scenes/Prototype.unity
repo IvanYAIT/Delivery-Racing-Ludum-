@@ -419,7 +419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
-  turnFactor: 3.5
+  turnFactor: 7
   driftMultiplier: 0.95
   maxSpeed: 30
   carTransform: {fileID: 1029186656}

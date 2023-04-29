@@ -16,13 +16,8 @@ public class Bootstrapper : MonoBehaviour
 
     void Start()
     {
+        Game game = new Game();
         CarController carController = new CarController(speed, turnFactor, driftMultiplier, maxSpeed, carRigibody, carTransform);
         inputListener.Construct(carController);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

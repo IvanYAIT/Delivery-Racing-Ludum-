@@ -12,10 +12,15 @@ public class Bootstrapper : MonoBehaviour
     [SerializeField] private ParticleSystem leftParticleSystem;
     [SerializeField] private ParticleSystem rightParticleSystem;
     [Space]
+    [Header("Air Strike Controller")]
+    [SerializeField] private int delay;
+    [Space]
     [Header("Other")]
     [SerializeField] private Transform carTransform;
     [SerializeField] private Rigidbody2D carRigibody;
     [SerializeField] private InputListener inputListener;
+    [SerializeField] private Transform airStrikeParentObject;
+    [SerializeField] private AirStrikeController airStrikeController;
 
     private WheelSmokeSystem _leftSmokeSystem;
     private WheelSmokeSystem _rightSmokeSystem;
@@ -25,6 +30,8 @@ public class Bootstrapper : MonoBehaviour
         Game game = new Game();
         CarController carController = new CarController(speed, turnFactor, driftMultiplier, maxSpeed, carRigibody, carTransform);
         inputListener.Construct(carController);
+
+        airStrikeController.Construct(airStrikeParentObject, delay);
 
         _leftSmokeSystem = new WheelSmokeSystem(carController, leftParticleSystem);
         _rightSmokeSystem = new WheelSmokeSystem(carController, rightParticleSystem);

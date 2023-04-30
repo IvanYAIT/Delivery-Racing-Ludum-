@@ -48,7 +48,10 @@ public class CarController
     {
         float minSpeedBeforAllowTurning = Mathf.Clamp01(_rb.velocity.magnitude / 8);
 
-        _rotationAngle -= axisX * _turnFactor * minSpeedBeforAllowTurning;
+        if (axisY > 0)
+            _rotationAngle -= axisX * _turnFactor * minSpeedBeforAllowTurning;
+        else if (axisY < 0)
+            _rotationAngle += axisX * _turnFactor * minSpeedBeforAllowTurning;
 
         _rb.MoveRotation(_rotationAngle);
     }

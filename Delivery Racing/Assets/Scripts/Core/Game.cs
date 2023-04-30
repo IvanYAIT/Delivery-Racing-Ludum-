@@ -16,6 +16,7 @@ public class Game
 
     public void Win()
     {
+        Time.timeScale = 0;
         FinishSystem.OnEndPath -= Win;
         _winPanel.SetActive(true);
     }

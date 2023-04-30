@@ -73,7 +73,7 @@ public class CarController
             return true;
         }
 
-        if (Mathf.Abs(LateralVelocity) > 4)
+        if (Mathf.Abs(LateralVelocity) > 4 * _driftMultiplier)
             return true;
 
         return false;

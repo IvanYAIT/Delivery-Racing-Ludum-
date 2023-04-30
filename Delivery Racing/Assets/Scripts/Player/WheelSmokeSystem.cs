@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WheelSmokeSystem
@@ -25,7 +23,7 @@ public class WheelSmokeSystem
             if (isBraking)
                 _particalEmissionRate = 30;
             else
-                _particalEmissionRate = Mathf.Abs(lateralVelocity) * 2;
+                _particalEmissionRate = Mathf.Abs(lateralVelocity) * 5;
         }
     }
 }

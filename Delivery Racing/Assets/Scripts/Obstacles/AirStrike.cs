@@ -9,6 +9,7 @@ public class AirStrike : MonoBehaviour
     [SerializeField] private GameObject alarmZone;
     [SerializeField] private GameObject deathZone;
 
+    public bool IsActive { get; private set; }
     void Start()
     {
         alarmZone.transform.localScale = new Vector3(radius, radius);
@@ -17,6 +18,7 @@ public class AirStrike : MonoBehaviour
 
     public IEnumerator Alarm()
     {
+        IsActive = true;
         alarmZone.SetActive(true);
         yield return new WaitForSeconds(alarmDuration);
         alarmZone.SetActive(false);
@@ -28,5 +30,6 @@ public class AirStrike : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         deathZone.SetActive(false);
+        IsActive = false;
     }
 }

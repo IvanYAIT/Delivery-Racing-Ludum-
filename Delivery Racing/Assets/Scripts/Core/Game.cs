@@ -12,6 +12,7 @@ public class Game
         _winPanel = winPanel;
         HealthSystem.OnZeroHealth += Restart;
         FinishSystem.OnEndPath += Win;
+        PetrolSystem.OnZeroPetrol += Restart;
     }
 
     public void Win()
@@ -24,6 +25,7 @@ public class Game
     public void Restart()
     {
         HealthSystem.OnZeroHealth -= Restart;
+        PetrolSystem.OnZeroPetrol -= Restart;
         FinishSystem.OnEndPath -= Win;
         OnGameEnd?.Invoke();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

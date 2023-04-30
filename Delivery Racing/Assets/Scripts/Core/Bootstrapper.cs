@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bootstrapper : MonoBehaviour
 {
@@ -14,6 +15,12 @@ public class Bootstrapper : MonoBehaviour
     [Space]
     [Header("Air Strike Controller")]
     [SerializeField] private int delay;
+    [SerializeField] private int airStrikesPerBombing;
+    [Space]
+    [Header("Petrol System")]
+    [SerializeField] private float petrolAmount;
+    [SerializeField] private float petrolPerSecond;
+    [SerializeField] private float petrolPerSecondOnStation;
     [Space]
     [Header("Other")]
     [SerializeField] private Transform carTransform;
@@ -24,6 +31,7 @@ public class Bootstrapper : MonoBehaviour
     [SerializeField] private Transform finishPointsParentObject;
     [SerializeField] private Compas compas;
     [SerializeField] private GameObject winPanel;
+    [SerializeField] private Slider petrolSlider;
 
     private WheelSmokeSystem _leftSmokeSystem;
     private WheelSmokeSystem _rightSmokeSystem;
@@ -36,7 +44,9 @@ public class Bootstrapper : MonoBehaviour
 
         FinishSystem finishSystem = new FinishSystem(finishPointsParentObject, compas);
 
-        //airStrikeController.Construct(airStrikeParentObject, delay);
+        PetrolSystem petrolSystem = new PetrolSystem(petrolAmount, petrolPerSecond, petrolSlider, petrolPerSecondOnStation);
+
+        airStrikeController.Construct(airStrikeParentObject, delay, airStrikesPerBombing);
 
         _leftSmokeSystem = new WheelSmokeSystem(carController, leftParticleSystem);
         _rightSmokeSystem = new WheelSmokeSystem(carController, rightParticleSystem);

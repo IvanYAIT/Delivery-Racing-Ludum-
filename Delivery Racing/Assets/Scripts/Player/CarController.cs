@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CarController
@@ -15,6 +16,8 @@ public class CarController
     private float axisX;
     private float axisY;
 
+    public static Action OnDecreasePetrol;
+
     private float LateralVelocity =>
         Vector2.Dot(transform.right, _rb.velocity);
     public CarController(float speed, float turnFactor, float driftMultiplier, float maxSpeed, Rigidbody2D rb,Transform transform)
@@ -29,6 +32,9 @@ public class CarController
 
     public void Drive()
     {
+        if (axisY != 0)
+            OnDecreasePetrol?.Invoke();
+
         MoveForward();
 
         Drift();
@@ -92,6 +98,8 @@ public class CarController
         Vector2 direction = transform.up * axisY * _speed;
 
         _rb.AddForce(direction, ForceMode2D.Force);
+
+        
     }
 
     public void SetInput(Vector2 axis)

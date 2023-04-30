@@ -4495,7 +4495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   turnFactor: 3.5
-  driftMultiplier: 0.95
+  driftMultiplier: 0.45
   maxSpeed: 15
   leftParticleSystem: {fileID: 2029488650}
   rightParticleSystem: {fileID: 2145040399}

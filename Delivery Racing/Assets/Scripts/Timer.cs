@@ -10,7 +10,7 @@ public class Timer : MonoBehaviour
     public GameObject panelDie;
 
     Image timerBar;
-    public float maTime = 10f;
+    public static float maTime = 100f;
     float timeLeft;
 
     public bool isActive;

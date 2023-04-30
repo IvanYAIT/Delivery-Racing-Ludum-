@@ -2,17 +2,21 @@ using UnityEngine;
 
 public class CarController
 {
-    public float _speed;
-    public float _turnFactor;
-    public float _driftMultiplier;
-    public float _maxSpeed;
+    private float _speed;
+    private float _turnFactor;
+    private float _driftMultiplier;
+    private float _maxSpeed;
     private Transform transform;
     private Rigidbody2D _rb;
 
     private float _rotationAngle;
     private float _velocityVsUp;
-    
 
+    private float axisX;
+    private float axisY;
+
+    private float LateralVelocity =>
+        Vector2.Dot(transform.right, _rb.velocity);
     public CarController(float speed, float turnFactor, float driftMultiplier, float maxSpeed, Rigidbody2D rb,Transform transform)
     {
         _speed = speed;
@@ -23,13 +27,13 @@ public class CarController
         this.transform = transform;
     }
 
-    public void Drive(Vector2 axis)
+    public void Drive()
     {
-        MoveForward(axis.y);
+        MoveForward();
 
         Drift();
 
-        Rotate(axis.x);
+        Rotate();
     }
 
     public void Drift()
@@ -40,7 +44,33 @@ public class CarController
         _rb.velocity = forwardVelocity + rightVelocity * _driftMultiplier;
     }
 
-    private void MoveForward(float axisY)
+    private void Rotate()
+    {
+        float minSpeedBeforAllowTurning = Mathf.Clamp01(_rb.velocity.magnitude / 8);
+
+        _rotationAngle -= axisX * _turnFactor * minSpeedBeforAllowTurning;
+
+        _rb.MoveRotation(_rotationAngle);
+    }
+
+    public bool IsRotating(out float lateralVelocity, out bool IsBraking)
+    {
+        lateralVelocity = LateralVelocity;
+        IsBraking = false;
+
+        if(axisY < 0 && _velocityVsUp > 0)
+        {
+            IsBraking = true;
+            return true;
+        }
+
+        if (Mathf.Abs(LateralVelocity) > 4)
+            return true;
+
+        return false;
+    }
+
+    private void MoveForward()
     {
         _velocityVsUp = Vector2.Dot(transform.up, _rb.velocity);
 
@@ -61,12 +91,9 @@ public class CarController
         _rb.AddForce(direction, ForceMode2D.Force);
     }
 
-    private void Rotate(float axisX)
+    public void SetInput(Vector2 axis)
     {
-        float minSpeedBeforAllowTurning = Mathf.Clamp01(_rb.velocity.magnitude / 8);
-
-        _rotationAngle -= axisX * _turnFactor * minSpeedBeforAllowTurning;
-
-        _rb.MoveRotation(_rotationAngle);
+        axisX = axis.x;
+        axisY = axis.y;
     }
 }

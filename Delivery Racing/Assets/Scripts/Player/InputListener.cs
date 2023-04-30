@@ -9,7 +9,8 @@ public class InputListener : MonoBehaviour
     {
         _axis.x = Input.GetAxis("Horizontal");
         _axis.y = Input.GetAxis("Vertical");
-        _carController.Drive(_axis);
+        _carController.SetInput(_axis);
+        _carController.Drive();
     }
 
     public void Construct(CarController carController)

@@ -19,8 +19,11 @@ public class Bootstrapper : MonoBehaviour
     [Space]
     [Header("Petrol System")]
     [SerializeField] private float petrolAmount;
-    [SerializeField] private float petrolPerSecond;
+    [SerializeField] private float petrolPerDriving;
     [SerializeField] private float petrolPerSecondOnStation;
+    [Space]
+    [Header("Finish")]
+    [SerializeField] private int amountOfPoints;
     [Space]
     [Header("Other")]
     [SerializeField] private Transform carTransform;
@@ -42,9 +45,9 @@ public class Bootstrapper : MonoBehaviour
         CarController carController = new CarController(speed, turnFactor, driftMultiplier, maxSpeed, carRigibody, carTransform);
         inputListener.Construct(carController);
 
-        FinishSystem finishSystem = new FinishSystem(finishPointsParentObject, compas);
+        FinishSystem finishSystem = new FinishSystem(finishPointsParentObject, compas, amountOfPoints);
 
-        PetrolSystem petrolSystem = new PetrolSystem(petrolAmount, petrolPerSecond, petrolSlider, petrolPerSecondOnStation);
+        PetrolSystem petrolSystem = new PetrolSystem(petrolAmount, petrolPerDriving, petrolSlider, petrolPerSecondOnStation);
 
         airStrikeController.Construct(airStrikeParentObject, delay, airStrikesPerBombing);
 

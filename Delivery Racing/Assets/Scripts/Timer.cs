@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
+    [SerializeField] private float timePerFinish = 10;
 
     public GameObject panelDie;
 
@@ -20,6 +21,8 @@ public class Timer : MonoBehaviour
         timerBar = GetComponent<Image>();
         timeLeft = maTime;
         isActive = panelDie.activeSelf;
+        FinishChecker.OnFinish += AddTime;
+        Game.OnGameEnd += EndGame;
     }
     void Update()
     {
@@ -31,7 +34,22 @@ public class Timer : MonoBehaviour
         else
         {
             //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            FinishChecker.OnFinish -= AddTime;
             panelDie.SetActive(!isActive);
         }
+    }
+
+    private void EndGame()
+    {
+        FinishChecker.OnFinish -= AddTime;
+        Game.OnGameEnd -= EndGame;
+    }
+
+    public void AddTime()
+    {
+        timeLeft += timePerFinish;
+        if (timeLeft >= maTime)
+            timeLeft = maTime;
+        
     }
 }

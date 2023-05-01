@@ -40,7 +40,10 @@ public class Bootstrapper : MonoBehaviour
     [SerializeField] private Transform finishPointsParentObject;
     [SerializeField] private Compas compas;
     [SerializeField] private GameObject winPanel;
+    [SerializeField] private GameObject losePanel;
     [SerializeField] private Slider petrolSlider;
+    [SerializeField] private AudioSource loseAudioSource;
+    [SerializeField] private AudioSource winAudioSource;
 
     private WheelSmokeSystem _leftSmokeSystem;
     private WheelSmokeSystem _rightSmokeSystem;
@@ -50,7 +53,7 @@ public class Bootstrapper : MonoBehaviour
 
     void Start()
     {
-        Game game = new Game(winPanel);
+        Game game = new Game(winPanel, losePanel, winAudioSource, loseAudioSource);
         CarController carController = new CarController(speed, turnFactor, driftMultiplier, maxSpeed, carRigibody, carTransform);
         inputListener.Construct(carController);
 

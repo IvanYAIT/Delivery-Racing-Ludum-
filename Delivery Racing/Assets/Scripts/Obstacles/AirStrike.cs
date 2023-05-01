@@ -9,6 +9,8 @@ public class AirStrike : MonoBehaviour
     [SerializeField] private GameObject alarmZone;
     [SerializeField] private GameObject deathZone;
 
+    [SerializeField] private AudioSource audioSource;
+
     public bool IsActive { get; private set; }
     void Start()
     {
@@ -21,6 +23,7 @@ public class AirStrike : MonoBehaviour
         IsActive = true;
         alarmZone.SetActive(true);
         yield return new WaitForSeconds(alarmDuration);
+        audioSource.Play();
         alarmZone.SetActive(false);
         deathZone.SetActive(true);
         StartCoroutine(Shoot());

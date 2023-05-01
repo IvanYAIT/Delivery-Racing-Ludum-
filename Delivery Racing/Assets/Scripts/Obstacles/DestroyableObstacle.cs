@@ -1,10 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DestroyableObstacle : MonoBehaviour
 {
     [SerializeField] private LayerMask playerLayer;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private Animator animator;
 
     private int _playerLayerMask;
 
@@ -16,6 +17,16 @@ public class DestroyableObstacle : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == _playerLayerMask)
-            gameObject.SetActive(false);
+        {
+            StartCoroutine(Explosion());
+        }
+    }
+
+    private IEnumerator Explosion()
+    {
+        audioSource.Play();
+        animator.SetTrigger("OnExplosion");
+        yield return new WaitForSeconds(1);
+        gameObject.SetActive(false);
     }
 }

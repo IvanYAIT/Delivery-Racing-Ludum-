@@ -10,6 +10,8 @@ public class CarController
     private Transform transform;
     private Rigidbody2D _rb;
 
+    private float _maxSpeedSaver;
+
     private float _rotationAngle;
     private float _velocityVsUp;
 
@@ -31,7 +33,24 @@ public class CarController
         _maxSpeed = maxSpeed;
         _rb = rb;
         this.transform = transform;
+        _maxSpeedSaver = _maxSpeed;
+        GroundChecker.OnGrassStay += DecreaseSpeed;
+        GroundChecker.OnGrassExit += IncreaseSpeed;
+        Game.OnGameEnd += GameEnd;
     }
+
+    private void GameEnd()
+    {
+        GroundChecker.OnGrassStay -= DecreaseSpeed;
+        GroundChecker.OnGrassExit -= IncreaseSpeed;
+        Game.OnGameEnd -= GameEnd;
+    }
+
+    private void DecreaseSpeed() =>
+         _maxSpeed /= 2f;
+
+    private void IncreaseSpeed()=>
+        _maxSpeed = _maxSpeedSaver;
 
     public void Drive()
     {

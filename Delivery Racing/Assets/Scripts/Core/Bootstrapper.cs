@@ -12,6 +12,8 @@ public class Bootstrapper : MonoBehaviour
     [Header("Wheels")]
     [SerializeField] private ParticleSystem leftParticleSystem;
     [SerializeField] private ParticleSystem rightParticleSystem;
+    [SerializeField] private TrailRenderer leftTrailRenderer;
+    [SerializeField] private TrailRenderer rightTrailRenderer;
     [Space]
     [Header("Air Strike Controller")]
     [SerializeField] private int delay;
@@ -42,6 +44,8 @@ public class Bootstrapper : MonoBehaviour
 
     private WheelSmokeSystem _leftSmokeSystem;
     private WheelSmokeSystem _rightSmokeSystem;
+    private WheelTrailSystem _leftTrailSystem;
+    private WheelTrailSystem _rightTrailSystem;
     private CarSFXHandler _carSFX;
 
     void Start()
@@ -58,6 +62,9 @@ public class Bootstrapper : MonoBehaviour
 
         airStrikeController.Construct(airStrikeParentObject, delay, airStrikesPerBombing);
 
+
+        _leftTrailSystem = new WheelTrailSystem(carController, leftTrailRenderer);
+        _rightTrailSystem = new WheelTrailSystem(carController, rightTrailRenderer);
         _leftSmokeSystem = new WheelSmokeSystem(carController, leftParticleSystem);
         _rightSmokeSystem = new WheelSmokeSystem(carController, rightParticleSystem);
     }
@@ -67,6 +74,8 @@ public class Bootstrapper : MonoBehaviour
         _carSFX.UpdateDriftSFX();
         _carSFX.UpdateEngineSFX();
 
+        _leftTrailSystem.Update();
+        _rightTrailSystem.Update();
         _leftSmokeSystem.Update();
         _rightSmokeSystem.Update();
     }

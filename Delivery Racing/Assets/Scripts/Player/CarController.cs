@@ -20,6 +20,9 @@ public class CarController
 
     private float LateralVelocity =>
         Vector2.Dot(transform.right, _rb.velocity);
+
+    public float VelocityMagnitude =>
+        _rb.velocity.magnitude;
     public CarController(float speed, float turnFactor, float driftMultiplier, float maxSpeed, Rigidbody2D rb,Transform transform)
     {
         _speed = speed;

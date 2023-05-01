@@ -25,6 +25,10 @@ public class Bootstrapper : MonoBehaviour
     [Header("Finish")]
     [SerializeField] private int amountOfPoints;
     [Space]
+    [Header("Audio")]
+    [SerializeField] private AudioSource driftAudioSource;
+    [SerializeField] private AudioSource engineAudioSource;
+    [Space]
     [Header("Other")]
     [SerializeField] private Transform carTransform;
     [SerializeField] private Rigidbody2D carRigibody;
@@ -38,6 +42,7 @@ public class Bootstrapper : MonoBehaviour
 
     private WheelSmokeSystem _leftSmokeSystem;
     private WheelSmokeSystem _rightSmokeSystem;
+    private CarSFXHandler _carSFX;
 
     void Start()
     {
@@ -49,6 +54,8 @@ public class Bootstrapper : MonoBehaviour
 
         PetrolSystem petrolSystem = new PetrolSystem(petrolAmount, petrolPerDriving, petrolSlider, petrolPerSecondOnStation);
 
+        _carSFX = new CarSFXHandler(driftAudioSource, engineAudioSource, carController);
+
         airStrikeController.Construct(airStrikeParentObject, delay, airStrikesPerBombing);
 
         _leftSmokeSystem = new WheelSmokeSystem(carController, leftParticleSystem);
@@ -57,6 +64,9 @@ public class Bootstrapper : MonoBehaviour
 
     private void Update()
     {
+        _carSFX.UpdateDriftSFX();
+        _carSFX.UpdateEngineSFX();
+
         _leftSmokeSystem.Update();
         _rightSmokeSystem.Update();
     }

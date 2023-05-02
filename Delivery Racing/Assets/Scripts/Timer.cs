@@ -1,17 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
-    [SerializeField] private float timePerFinish = 10;
+    [SerializeField] private float timePerFinish = 30;
 
     public GameObject panelDie;
 
     Image timerBar;
-    public static float maTime = 100f;
+    public static float maTime = 120f;
     float timeLeft;
 
     public bool isActive;
